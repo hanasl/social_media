@@ -208,6 +208,8 @@ class _PostScreenState extends State<PostScreen> {
                                 "photo": imageUrl1,
                                 'id': user_data["id"],
                               });
+                               Navigator.of(context)
+                                                .pushNamedAndRemoveUntil("home", (route) => false);
                             }
                           },
                           child: Text(

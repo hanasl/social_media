@@ -93,16 +93,7 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: Colors.black,
       appBar: AppBar(
         title: Text("Social Media"),
-        backgroundColor: Colors.blue,
-        actions: [
-          IconButton(
-            onPressed: () async {
-              await FirebaseAuth.instance.signOut();
-              Navigator.of(context).pushReplacementNamed("login");
-            },
-            icon: Icon(Icons.exit_to_app),
-          )
-        ],
+        backgroundColor: Color(0xffB81736),
       ),
       body: Column(
         children: [
@@ -194,7 +185,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 size: 30,
                               ),
                               SizedBox(
-                                height: 15,
+                                width: 10,
                               ),
                               GestureDetector(
                                 onTap: () => showCommentDialog(context, postId),
@@ -205,7 +196,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                               ),
                               SizedBox(
-                                height: 15,
+                                width: 10,
                               ),
                               Icon(
                                 Icons.near_me_outlined,
@@ -288,13 +279,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                   // Utilisez commentDocument pour afficher les détails du commentaire
                                   return ListTile(
                                     title: Text(
-                                        "${commentDocument['CommentText']}",style: TextStyle(
-                                color: Colors.white,
-                              ),),
+                                      "${commentDocument['CommentedBy']}",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                      ),
+                                    ),
                                     subtitle: Text(
-                                        "${commentDocument['CommentedBy']}",style: TextStyle(
-                                color: Colors.white,
-                              ),),
+                                      "${commentDocument['CommentText']}",
+                                      style: TextStyle(
+                                        color: Colors.grey.shade400,
+                                      ),
+                                    ),
                                   );
                                 },
                               );

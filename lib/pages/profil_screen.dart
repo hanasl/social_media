@@ -2,7 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
+import 'details_screen.dart';
 import 'login_screen.dart';
 
 class ProfilScreen extends StatefulWidget {
@@ -46,11 +48,14 @@ class _ProfilScreenState extends State<ProfilScreen> {
                   children: [
                     Text(
                       'Hana',
-                      style: TextStyle(fontSize: 28),
+                      style: TextStyle(fontSize: 28, color: Colors.white),
+                    ),
+                    SizedBox(
+                      height: 10,
                     ),
                     Text(
                       'Hana@gmail.com',
-                      style: TextStyle(fontSize: 13),
+                      style: TextStyle(fontSize: 13, color: Colors.white),
                     )
                   ],
                 )
@@ -116,14 +121,14 @@ class _ProfilScreenState extends State<ProfilScreen> {
                   Container(
                     child: MaterialButton(
                       onPressed: () {
-                        //  pushNewScreenWithRouteSettings(context,
-                        //      screen: EditProfil(),
-                        //     settings: RouteSettings(),
-                        //    withNavBar: false,
-                        //   pageTransitionAnimation: PageTransitionAnimation.cupertino);
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => DetailsScreen(),maintainState: false
+                            ));
                       },
                       child: ListTile(
-                        title: Text("Modifier Votre Boutique"),
+                        title: Text("Modifier Votre Publication"),
                         leading: Icon(Icons.edit_document),
                         trailing: Icon(
                           Icons.navigate_next,

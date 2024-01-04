@@ -41,7 +41,7 @@ class _NavBarState extends State<NavBar> {
         PersistentBottomNavBarItem(
           iconSize: 28,
           icon: Icon(Icons.add),
-          title: ("Ajouter Boutique "),
+          title: ("Posts "),
           activeColorPrimary: Color(0xffB81736),
           inactiveColorPrimary: Colors.grey,
         ),
