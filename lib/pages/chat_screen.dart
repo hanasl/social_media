@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 
+import 'ChatScreen.dart';
 import 'chat_message.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -18,53 +19,62 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Users"),
-     backgroundColor: 
-        Theme.of(context).colorScheme.inversePrimary,
-        elevation: 0, 
-        ),
-         body: _buildUserList(),
+      appBar: AppBar(title: Text("Chat"), backgroundColor: Color(0xffB81736)),
+      body: _buildUserList(),
     );
   }
-      //list of users
-    Widget _buildUserList(){
-      return StreamBuilder <QuerySnapshot > 
-      (stream: FirebaseFirestore.instance.collection('utilisateur').snapshots(),
-      builder: (context, snapshot){
-        if(snapshot.hasError){
+
+  //list of users
+  Widget _buildUserList() {
+    return StreamBuilder<QuerySnapshot>(
+      stream: FirebaseFirestore.instance.collection('utilisateur').snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
           return const Text('error');
         }
-        if(snapshot.connectionState == ConnectionState.waiting){
+        if (snapshot.connectionState == ConnectionState.waiting) {
           return Text('loading...');
         }
         return ListView(
-        children: snapshot.data!.docs.map<Widget>(
-          (doc)=>_buildUserListItem(doc)).toList(),
+          children: snapshot.data!.docs
+              .map<Widget>((doc) => _buildUserListItem(doc))
+              .toList(),
         );
-      },);
-    }
-    //individual user list item
- Widget _buildUserListItem(DocumentSnapshot document){
-Map<String, dynamic> data= document.data()! as Map<String,dynamic>;
-  //display all users
- if (_auth.currentUser!.email != data['Email']){
-  return ListTile(
-    title:Text( data ['fullname']),
-    onTap: (){
-      //pass the clicked user to the chat app
-      Navigator.push
-      (context, MaterialPageRoute(builder: 
-      (context)=>ChatSreen(
-        receiverUserName: data['fullname'],
-        receiverUserID:data ['id'] ,
-      ),
-      ),
+      },
+    );
+  }
+
+  //individual user list item
+  Widget _buildUserListItem(DocumentSnapshot document) {
+    Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
+    //display all users
+    if (_auth.currentUser!.email != data['Email']) {
+      return ListTile(
+        leading: ClipOval(
+          child: Image(
+            height: 68,
+            width: 68,
+            image: AssetImage('assets/women.png'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        title: Text(data['fullname']),
+        onTap: () {
+          //pass the clicked user to the chat app
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => chatScreen(
+                name: data['fullname'],
+                id: data['id'],
+              ),
+            ),
+          );
+        },
       );
-    },
-  );
- }else{
-  //empty container
-  return Container();
- }
+    } else {
+      //empty container
+      return Container();
+    }
   }
-  }
+}
